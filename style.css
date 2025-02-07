@@ -1,0 +1,32 @@
+*{
+
+    padding: 0;
+    margin: 0;
+
+}
+
+
+body {
+
+    background-color: cadetblue;
+}
+
+.container {
+
+    position: relative;
+    width: 700px;
+    height: 700px;
+    padding-top: 100px;
+    background-color: rgb(141, 240, 240);
+    margin: 4rem auto;
+    border-radius: 50px;
+
+}
+
+.board {
+
+    position: absolute;
+    width: 700px;
+    height: 700px;
+
+}
