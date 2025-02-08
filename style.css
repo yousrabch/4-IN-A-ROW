@@ -1,32 +1,218 @@
-*{
-
-    padding: 0;
+* {
     margin: 0;
-
-}
-
-
-body {
-
-    background-color: cadetblue;
-}
-
-.container {
-
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3a4856;
+    height: 100vh;
+  }
+  .container {
+    background-color:  #566777;
+    height: 620px;
+    width: 360px;
     position: relative;
-    width: 700px;
-    height: 700px;
-    padding-top: 100px;
-    background-color: rgb(141, 240, 240);
-    margin: 4rem auto;
-    border-radius: 50px;
-
-}
-
-.board {
-
+    display: flex;
+    padding-top: 90px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+  }
+  .board {
+    height: 420px;
+    width: 360px;
+  }
+  .colums {
+    z-index: 0;
+    display: flex;
+    height: 420px;
+    width: 360px;
+  }
+  .board,
+  .colums {
     position: absolute;
-    width: 700px;
-    height: 700px;
-
-}
+  }
+  .colums .colum {
+    height: 420px;
+    width: 55px;
+    border-radius: 30px;
+  }
+  /* .column-hover:hover {
+      background-color: #0404045a;
+  } */
+  .bottom {
+    position: absolute;
+    bottom: 0px;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+  }
+  .btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .red {
+    height: 50px;
+    width: 43px;
+    border-radius: 50%;
+    background-color: rgb(247, 72, 72);
+    border: 5px solid #000;
+  }
+  .blue {
+    height: 50px;
+    width: 43px;
+    border-radius: 50%;
+    background-color: rgb(47, 47, 229);
+    border: 5px solid #000;
+  }
+  .state {
+    display: flex;
+    justify-content: space-around;
+  
+    width: 150px;
+  }
+  .score {
+    display: flex;
+    width: 50px;
+    justify-content: space-around;
+    align-items: center;
+    color: #fff;
+    font-size: 1.5rem;
+  }
+  
+  .button-85 {
+    padding: 0.6em 1em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-85:before {
+    content: "";
+    background: linear-gradient(
+      45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+  }
+  
+  @keyframes glowing-button-85 {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  .button-85:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+  
+  .button-24 {
+    background: #ff4742;
+    border: 1px solid #ff4742;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 10px 12px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+  }
+  
+  .button-24:hover,
+  .button-24:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: #ff4742;
+  }
+  
+  .button-24:active {
+    opacity: 0.5;
+  }
+  .game-over {
+    position: absolute;
+    height: 420px;
+    width: 360px;
+  }
+  .line {
+    width: 0px;
+    height: 8px;
+    background-color: #fff;
+    position: absolute;
+    left: 185px;
+    top: 175px;
+    border-radius: 3px;
+    transform-origin: 0 0;
+    transition: width 300ms ease-in-out;
+  }
+  .line.horizontal {
+    width: 160px;
+    
+  }
+  .line.vertical {
+    width: 210px;
+    transform: rotate(90deg);
+  }
+  .line.diagonal {
+    width: 260px;
+    transform: rotate(52deg);
+  }

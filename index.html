@@ -1,48 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOR IN A ROW</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-<div class="container">
-<img src="./imgs/board.png" alt="" class="board">
-<div class="columns">
-
-<div class="clms"></div>
-<div class="clms"></div>
-<div class="clms"></div>
-<div class="clms"></div>
-<div class="clms"></div>
-<div class="clms"></div>
-<div class="clms"></div>
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-    <script src="./index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>4 IN A ROW GAME</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="balls"></div>
+      <img src="./imgs/board.png" alt="board" class="board" />
+      <div class="colums">
+        <div class="colum"></div>
+        <div class="colum"></div>
+        <div class="colum"></div>
+        <div class="colum"></div>
+        <div class="colum"></div>
+        <div class="colum"></div>
+        <div class="colum"></div>
+      </div>
+      <div class="game-over">
+        <div class="line horizontal"></div>
+      </div>
+      <div class="bottom">
+        <div class="state">
+          <div class="red"></div>
+          <div class="score">
+          <span class="ply1">0 </span>-<span class="ply2"> 0</span></div>
+          <div class="blue"></div>
+        </div>
+        <div class="btns">
+          <button class="button-24" role="button">RESET SCORE</button>
+          <button class="button-85" role="button">PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
