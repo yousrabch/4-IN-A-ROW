@@ -31,8 +31,17 @@
     width: 360px;
   }
   .board,
-  .colums {
+  .colums, 
+  .balls{
     position: absolute;
+
+  }
+  .balls{
+    
+    top: 100px;
+    left: 9px;
+ 
+    
   }
   .colums .colum {
     height: 420px;
@@ -57,20 +66,23 @@
     flex-direction: column;
     gap: 10px;
   }
-  .red {
+  .red, .player1{
+    position: absolute;
     height: 50px;
     width: 43px;
     border-radius: 50%;
     background-color: rgb(247, 72, 72);
-    border: 5px solid #000;
+    border: 2px solid #23b0db;
   }
-  .blue {
+  .blue, .player2{
+    position: absolute;
     height: 50px;
     width: 43px;
     border-radius: 50%;
-    background-color: rgb(47, 47, 229);
-    border: 5px solid #000;
+    background-color: rgb(48, 15, 197);
+    border: 2px solid #23b0db;
   }
+  
   .state {
     display: flex;
     justify-content: space-around;
@@ -105,15 +117,15 @@
     content: "";
     background: linear-gradient(
       45deg,
-      #ff0000,
-      #ff7300,
-      #fffb00,
-      #48ff00,
-      #00ffd5,
       #002bff,
       #7a00ff,
-      #ff00c8,
-      #ff0000
+      #205cf4,
+      #68b6f2,
+      #0a9880,
+      #002bff,
+      #7a00ff,
+      #2d0e6f,
+      #480633
     );
     position: absolute;
     top: -2px;
@@ -154,8 +166,8 @@
   }
   
   .button-24 {
-    background: #ff4742;
-    border: 1px solid #ff4742;
+    background: #867494;
+    border: 1px solid #b17994;
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
     box-sizing: border-box;
@@ -182,7 +194,7 @@
   .button-24:active {
     background-color: initial;
     background-position: 0 0;
-    color: #ff4742;
+    color: #c2a7b3;
   }
   
   .button-24:active {
