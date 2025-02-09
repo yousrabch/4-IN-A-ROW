@@ -5,7 +5,10 @@ const mahmoud = {
     balls : document.querySelector(".balls"),
     columns : document.querySelectorAll(".colum"),
     line : document.querySelector(".line"),
-    score : document.querySelector(".score")
+    score : document.querySelector(".score"),
+    reset : document.querySelector(".reset button"),
+    playAgainBtn: document.querySelector(".play-again .button-85"),
+    columnsdiv : document.querySelector(".colums")
 };
 
 const game = {
@@ -17,30 +20,84 @@ const game = {
         position: { row: -1, column: 3 }, DEFAULT_POSITION: { row: -1, column: 3 } },
 
         isBallFalling: false,
-        score : {player1 : 0, player2 : 0, key:"keyscore" }
-
+        score : {player1 : 0, player2 : 0, key:"keyscore" },
+        sounds: {
+            collision: new Audio('./mp3/collision.mp3'),
+            selectColumn: new Audio('./mp3/select-column.mp3'),
+            scratch: new Audio('./mp3/scratch.mp3'),
+          },
     }
 
+    const savedScore = JSON.parse(localStorage.getItem(game.score.key));
+    console.log(savedScore);
+if (savedScore) {
+  game.score.player1 = savedScore.player1;
+  game.score.player2 = savedScore.player2;
+}
 
 
-    mahmoud.columns.forEach((columnEl) => {
-        columnEl.addEventListener('mouseover', changeColumn);
-        columnEl.addEventListener('click', play);
-      });
-
-     
-    
+    function resetBoard() {
         for (let r = 0; r < game.dimension.rows; r++) {
           game.board[r] = [];
           for (let c = 0; c < game.dimension.columns; c++) {
-            game.board[r][c] = '';
+            game.board[r][c] = "";
           }
         }
+      }
+
+      mahmoud.playAgainBtn.addEventListener("click", startGame);
+      mahmoud.columnsdiv.addEventListener("mouseleave", () =>{
+                     game.ball.position.column = game.ball.DEFAULT_POSITION.column;             
+      } )
+      function startGame() {
+        game.isBallFalling = false;
+        mahmoud.balls.innerHTML = '';
+        mahmoud.line.classList = ['line'];
+        disableButtons(true);
+        resetBoard();
+        switchplayer();
+        generateballs(game.player);
+       
+        addHoverEffectToColumns();
+        updateScore();
+      }
+      startGame();
+
+      function disableButtons(state) {
+ 
+        mahmoud.playAgainBtn.disabled = state;
+      }
+
+    
+
+    
+    mahmoud.columns.forEach((columnEl) => {
+        columnEl.addEventListener('click', changeColumn);
+        columnEl.addEventListener('click', play);
+      });
+
+      mahmoud.reset.addEventListener('click', () => {
+ 
+        game.score.player1 = 0;
+        game.score.player2 = 0;
+        updateScore();
+
+      })
+    
+        
       console.log(game.board);
+
+
+
+
+
+
+
 
       function play(evt){
 
-        
+        if(game.isBallFalling) return;
+        game.isBallFalling = true;
         
         const { column } = evt.target.dataset;
 
@@ -50,7 +107,9 @@ const game = {
             if(!game.board[r][column]){empty++;}
         }
 
-        if(!empty){return;}
+        if(!empty){
+            game.isBallFalling = false
+            return;}
        
         let row = empty -1;
         let position = 0,
@@ -68,20 +127,29 @@ const game = {
            } else
            {
              mahmoud.ball.style.top = `${calculrow(row)}px`;
+             game.sounds.collision.play();
              game.board[row][column] = game.player;
+             
             
              const state = checkForFourInARow(game.board);
              if (state) {
                const { row, column, direction } = state;
                drawLine(row, column, direction);
+               
+               
                game.score[game.player]++;
-               mahmoud.score.innerHTML = `${game.score.player1} - ${game.score.player2}`
-               localStorage.getItem(game.score.key, JSON.stringify(game.score))
+               updateScore();
+               removeHoverEffectFromColumns();
+
+               mahmoud.reset.disabled = false ;
+               mahmoud.playAgainBtn.disabled = false;
                 console.log("game over");
                 
                 return;}
              console.log(game.board);
+             
              generateballs(switchplayer());
+             game.isBallFalling = false;
            }
 
            
@@ -107,6 +175,11 @@ const game = {
       }
 
 
+      function updateScore() {
+       mahmoud.score.innerHTML = `${game.score.player1} - ${game.score.player2}`;
+        localStorage.setItem(game.score.key, JSON.stringify(game.score));
+      }
+
  function drawLine(row, column, direction) {
         // Set line position and rotation
         const offset = {
@@ -130,9 +203,9 @@ const game = {
        mahmoud.line.classList.add(className);
        console.log(className);
         // Play sound
-       // game.sounds.scratch.play();
+       game.sounds.scratch.play();
       }
-      //drawLine(5, 3, -53);
+      //drawLine(5, 2, -53);
 
 
       function checkForFourInARow(board) {
@@ -152,10 +225,10 @@ const game = {
               return { row: r, column: c, direction: 90 }; // Vertical
             }
             if (r + 3 < rows && c + 3 < cols && areSame(board[r][c], board[r+1][c+1], board[r+2][c+2], board[r+3][c+3])) {
-              return { row: r, column: c, direction: 45 }; // Diagonal (top-left to bottom-right)
+              return { row: r, column: c, direction: 53 }; // Diagonal (top-left to bottom-right)
             }
             if (r - 3 >= 0 && c + 3 < cols && areSame(board[r][c], board[r-1][c+1], board[r-2][c+2], board[r-3][c+3])) {
-              return { row: r, column: c, direction: -45 }; // Diagonal (bottom-left to top-right)
+              return { row: r, column: c, direction: -53 }; // Diagonal (bottom-left to top-right)
             }
           }
         }
@@ -178,19 +251,6 @@ function calculrow(row){
     
 }
 
-function diagonal(column,row){
-    let i=0
-    
-    while(i<4){ 
-        boared[column][row]
-
-    }
-
-
-
-
-
-}
 
 function changeColumn(evt) {
     const { column } = evt.target.dataset;
@@ -199,7 +259,7 @@ function changeColumn(evt) {
     game.ball.position.column = column;
   
     if (!game.isBallFalling) {
-      //game.sounds.selectColumn.play();
+      game.sounds.selectColumn.play();
       placeball(game.ball.position.row, game.ball.position.column);
     }
   }
@@ -218,6 +278,7 @@ function switchplayer()
 }
 
 function generateballs(player){
+   
 
  mahmoud.ball = document.createElement("div");
 mahmoud.ball.setAttribute("class",player);
@@ -232,10 +293,9 @@ mahmoud.ball.style.left = "150px" ;
 
 
 }
-generateballs(switchplayer());
-//placeball(5, 4);
-
-addHoverEffectToColumns();
 
 
-//console.log(mahmoud.columns);
+
+
+
+
